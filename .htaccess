@@ -1,0 +1,26 @@
+ErrorDocument 403 "Error 403: Forbidden Access"
+
+<Files xmlrpc.php>
+order allow,deny
+deny from all
+</Files>
+
+<IfModule mod_rewrite.c>
+RewriteEngine On
+RewriteBase /
+RewriteCond %{HTTP_COOKIE} !^.*cookie\-mona\-securisation=4532698754.*$ [NC]
+RewriteRule wp-login.php - [F]
+</IfModule>
+
+
+# BEGIN WordPress
+<IfModule mod_rewrite.c>
+RewriteEngine On
+RewriteBase /
+RewriteRule ^index\.php$ - [L]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule . /index.php [L]
+</IfModule>
+
+# END WordPress
