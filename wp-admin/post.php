@@ -23,7 +23,7 @@ elseif ( isset( $_POST['post_ID'] ) )
 else
  	$post_id = $post_ID = 0;
 
-$post = $post_type = $post_type_object = null;
+global $post_type, $post_type_object, $post;
 
 if ( $post_id )
 	$post = get_post( $post_id );
@@ -95,7 +95,9 @@ if ( ! $sendback ||
 		$sendback = admin_url( 'upload.php' );
 	} else {
 		$sendback = admin_url( 'edit.php' );
-		$sendback .= ( ! empty( $post_type ) ) ? '?post_type=' . $post_type : '';
+		if ( ! empty( $post_type ) ) {
+			$sendback = add_query_arg( 'post_type', $post_type, $sendback );
+		}
 	}
 } else {
 	$sendback = remove_query_arg( array('trashed', 'untrashed', 'deleted', 'ids'), $sendback );
@@ -229,8 +231,9 @@ case 'editpost':
 	$post_id = edit_post();
 
 	// Session cookie flag that the post was saved
-	if ( isset( $_COOKIE['wp-saving-post-' . $post_id] ) )
-		setcookie( 'wp-saving-post-' . $post_id, 'saved' );
+	if ( isset( $_COOKIE['wp-saving-post'] ) && $_COOKIE['wp-saving-post'] === $post_id . '-check' ) {
+		setcookie( 'wp-saving-post', $post_id . '-saved', time() + DAY_IN_SECONDS );
+	}
 
 	redirect_post($post_id); // Send user on their way while we keep working
 

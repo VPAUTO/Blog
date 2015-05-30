@@ -1,6 +1,6 @@
 <?php
 /**
- * Accepts file uploads from swfupload or other asynchronous upload methods.
+ * Server-side file upload handler from wp-plupload, swfupload or other asynchronous upload methods.
  *
  * @package WordPress
  * @subpackage Administration
@@ -32,10 +32,7 @@ if ( ! ( isset( $_REQUEST['action'] ) && 'upload-attachment' == $_REQUEST['actio
 
 require_once( ABSPATH . 'wp-admin/admin.php' );
 
-if ( !current_user_can('upload_files') )
-	wp_die(__('You do not have permission to upload files.'));
-
-header('Content-Type: text/html; charset=' . get_option('blog_charset'));
+header( 'Content-Type: text/html; charset=' . get_option( 'blog_charset' ) );
 
 if ( isset( $_REQUEST['action'] ) && 'upload-attachment' === $_REQUEST['action'] ) {
 	include( ABSPATH . 'wp-admin/includes/ajax-actions.php' );
@@ -45,6 +42,10 @@ if ( isset( $_REQUEST['action'] ) && 'upload-attachment' === $_REQUEST['action']
 
 	wp_ajax_upload_attachment();
 	die( '0' );
+}
+
+if ( ! current_user_can( 'upload_files' ) ) {
+	wp_die( __( 'You do not have permission to upload files.' ) );
 }
 
 // just fetch the detail form for that attachment
@@ -86,7 +87,7 @@ if ( isset( $_REQUEST['post_id'] ) ) {
 
 $id = media_handle_upload( 'async-upload', $post_id );
 if ( is_wp_error($id) ) {
-	echo '<div class="error-div">
+	echo '<div class="error-div error">
 	<a class="dismiss" href="#" onclick="jQuery(this).parents(\'div.media-item\').slideUp(200, function(){jQuery(this).remove();});">' . __('Dismiss') . '</a>
 	<strong>' . sprintf(__('&#8220;%s&#8221; has failed to upload due to an error'), esc_html($_FILES['async-upload']['name']) ) . '</strong><br />' .
 	esc_html($id->get_error_message()) . '</div>';
@@ -103,7 +104,7 @@ if ( $_REQUEST['short'] ) {
 	/**
 	 * Filter the returned ID of an uploaded attachment.
 	 *
-	 * The dynamic portion of the hook name, $type, refers to the attachment type,
+	 * The dynamic portion of the hook name, `$type`, refers to the attachment type,
 	 * such as 'image', 'audio', 'video', 'file', etc.
 	 *
 	 * @since 2.5.0

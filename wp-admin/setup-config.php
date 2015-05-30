@@ -32,7 +32,13 @@ define( 'ABSPATH', dirname( dirname( __FILE__ ) ) . '/' );
 
 require( ABSPATH . 'wp-settings.php' );
 
-require( ABSPATH . 'wp-admin/includes/upgrade.php' );
+/** Load WordPress Administration Upgrade API */
+require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
+
+/** Load WordPress Translation Install API */
+require_once( ABSPATH . 'wp-admin/includes/translation-install.php' );
+
+nocache_headers();
 
 // Support wp-config-sample.php one level up, for the develop repo.
 if ( file_exists( ABSPATH . 'wp-config-sample.php' ) )
@@ -71,22 +77,26 @@ function setup_config_display_header( $body_classes = array() ) {
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"<?php if ( is_rtl() ) echo ' dir="rtl"'; ?>>
 <head>
-<meta name="viewport" content="width=device-width" />
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title><?php _e( 'WordPress &rsaquo; Setup Configuration File' ); ?></title>
-<link rel="stylesheet" href="css/install.css?ver=<?php echo preg_replace( '/[^0-9a-z\.-]/i', '', $wp_version ); ?>" type="text/css" />
-<link rel="stylesheet" href="../<?php echo WPINC ?>/css/buttons.css?ver=<?php echo preg_replace( '/[^0-9a-z\.-]/i', '', $wp_version ); ?>" type="text/css" />
-
+	<meta name="viewport" content="width=device-width" />
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title><?php _e( 'WordPress &rsaquo; Setup Configuration File' ); ?></title>
+	<?php wp_admin_css( 'install', true ); ?>
 </head>
 <body class="<?php echo implode( ' ', $body_classes ); ?>">
 <h1 id="logo"><a href="<?php esc_attr_e( 'https://wordpress.org/' ); ?>" tabindex="-1"><?php _e( 'WordPress' ); ?></a></h1>
 <?php
 } // end function setup_config_display_header();
 
+$language = '';
+if ( ! empty( $_REQUEST['language'] ) ) {
+	$language = preg_replace( '/[^a-zA-Z_]/', '', $_REQUEST['language'] );
+} elseif ( isset( $GLOBALS['wp_local_package'] ) ) {
+	$language = $GLOBALS['wp_local_package'];
+}
+
 switch($step) {
 	case -1:
-
-		if ( empty( $_GET['language'] ) && ( $languages = wp_get_available_translations_from_api() ) ) {
+		if ( wp_can_install_language_pack() && empty( $language ) && ( $languages = wp_get_available_translations() ) ) {
 			setup_config_display_header( 'language-chooser' );
 			echo '<form id="setup" method="post" action="?step=0">';
 			wp_install_language_form( $languages );
@@ -97,10 +107,11 @@ switch($step) {
 		// Deliberately fall through if we can't reach the translations API.
 
 	case 0:
-		if ( ! empty( $_REQUEST['language'] ) ) {
-			$loaded_language = wp_install_download_language_pack( $_REQUEST['language'] );
+		if ( ! empty( $language ) ) {
+			$loaded_language = wp_download_language_pack( $language );
 			if ( $loaded_language ) {
-				wp_install_load_language( $loaded_language );
+				load_default_textdomain( $loaded_language );
+				$GLOBALS['wp_locale'] = new WP_Locale();
 			}
 		}
 
@@ -125,7 +136,7 @@ switch($step) {
 <p>
 	<?php _e( 'We&#8217;re going to use this information to create a <code>wp-config.php</code> file.' ); ?>
 	<strong><?php _e( "If for any reason this automatic file creation doesn&#8217;t work, don&#8217;t worry. All this does is fill in the database information to a configuration file. You may also simply open <code>wp-config-sample.php</code> in a text editor, fill in your information, and save it as <code>wp-config.php</code>." ); ?></strong>
-	<?php _e( "Need more help? <a href='http://codex.wordpress.org/Editing_wp-config.php'>We got it</a>." ); ?>
+	<?php _e( "Need more help? <a href='https://codex.wordpress.org/Editing_wp-config.php'>We got it</a>." ); ?>
 </p>
 <p><?php _e( "In all likelihood, these items were supplied to you by your Web Host. If you do not have this information, then you will need to contact them before you can continue. If you&#8217;re all ready&hellip;" ); ?></p>
 
@@ -134,7 +145,9 @@ switch($step) {
 	break;
 
 	case 1:
-		$loaded_language = wp_install_load_language( $_REQUEST['language'] );
+		load_default_textdomain( $language );
+		$GLOBALS['wp_locale'] = new WP_Locale();
+
 		setup_config_display_header();
 	?>
 <form method="post" action="setup-config.php?step=2">
@@ -167,14 +180,16 @@ switch($step) {
 		</tr>
 	</table>
 	<?php if ( isset( $_GET['noapi'] ) ) { ?><input name="noapi" type="hidden" value="1" /><?php } ?>
-	<input type="hidden" name="language" value="<?php echo esc_attr( $loaded_language ); ?>" />
+	<input type="hidden" name="language" value="<?php echo esc_attr( $language ); ?>" />
 	<p class="step"><input name="submit" type="submit" value="<?php echo htmlspecialchars( __( 'Submit' ), ENT_QUOTES ); ?>" class="button button-large" /></p>
 </form>
 <?php
 	break;
 
 	case 2:
-	$loaded_language = wp_install_load_language( $_REQUEST['language'] );
+	load_default_textdomain( $language );
+	$GLOBALS['wp_locale'] = new WP_Locale();
+
 	$dbname = trim( wp_unslash( $_POST[ 'dbname' ] ) );
 	$uname = trim( wp_unslash( $_POST[ 'uname' ] ) );
 	$pwd = trim( wp_unslash( $_POST[ 'pwd' ] ) );
@@ -187,9 +202,9 @@ switch($step) {
 		$step_1 .= '&amp;noapi';
 	}
 
-	if ( $loaded_language ) {
-		$step_1 .= '&amp;language=' . $loaded_language;
-		$install .= '?language=' . $loaded_language;
+	if ( ! empty( $language ) ) {
+		$step_1 .= '&amp;language=' . $language;
+		$install .= '?language=' . $language;
 	} else {
 		$install .= '?language=en_US';
 	}
@@ -265,6 +280,11 @@ switch($step) {
 			case 'DB_HOST'     :
 				$config_file[ $line_num ] = "define('" . $constant . "'," . $padding . "'" . addcslashes( constant( $constant ), "\\'" ) . "');\r\n";
 				break;
+			case 'DB_CHARSET'  :
+				if ( 'utf8mb4' === $wpdb->charset || ( ! $wpdb->charset && $wpdb->has_cap( 'utf8mb4' ) ) ) {
+					$config_file[ $line_num ] = "define('" . $constant . "'," . $padding . "'utf8mb4');\r\n";
+				}
+				break;
 			case 'AUTH_KEY'         :
 			case 'SECURE_AUTH_KEY'  :
 			case 'LOGGED_IN_KEY'    :
@@ -293,9 +313,11 @@ switch($step) {
 <p class="step"><a href="<?php echo $install; ?>" class="button button-large"><?php _e( 'Run the install' ); ?></a></p>
 <script>
 (function(){
-var el=document.getElementById('wp-config');
-el.focus();
-el.select();
+if ( ! /iPad|iPod|iPhone/.test( navigator.userAgent ) ) {
+	var el = document.getElementById('wp-config');
+	el.focus();
+	el.select();
+}
 })();
 </script>
 <?php

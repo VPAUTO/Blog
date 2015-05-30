@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<!--[if IE 6 ]><html lang="en-us" class="ie6"> <![endif]-->
+<!--[if IE 7 ]><html lang="en-us" class="ie7"> <![endif]-->
+<!--[if IE 8 ]><html lang="en-us" class="ie8"> <![endif]-->
+<!--[if (gt IE 7)|!(IE)]><!-->
+<html lang="en-us"><!--<![endif]-->
+<head>
+	<meta charset="utf-8">
+
+	<title>Entrance WordPress Theme Documentation</title>
+	<!-- Framework CSS -->
+	<link rel="stylesheet" href="assets/blueprint-css/screen.css" type="text/css" media="screen, projection">
+	<link rel="stylesheet" href="assets/blueprint-css/print.css" type="text/css" media="print">
+	<!--[if lt IE 8]><link rel="stylesheet" href="assets/blueprint-css/ie.css" type="text/css" media="screen, projection"><![endif]-->
+	<link rel="stylesheet" href="assets/blueprint-css/plugins/fancy-type/screen.css" type="text/css" media="screen, projection">
+	<style type="text/css" media="screen">
+		table, hr, .box { margin-bottom:25px; }
+		.box p { margin-bottom:10px; }
+		img { max-width: 100%;  background: none repeat scroll 0 0 #FFFFFF;
+    border: 1px solid #CCCCCC;
+    box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.1);
+    max-width: 700px;
+    padding: 5px;}
+		h4 { font-weight: bold; margin: 60px 0 20px; }
+		h3 { margin: 100px 0 20px; }
+		p { margin-bottom: 20px; }
+	</style>
+</head>
+
+<body>
+	<div class="container">
+
+		<h3 class="center alt">WordPress Theme Documentation</h3>
+
+		<hr>
+
+		<h1 class="center">Entrance</h1>
+
+		<div class="borderTop">
+			<div class="span-6 colborder info prepend-1">
+				<p class="prepend-top">
+					<strong>
+					Created: 07/02/2014<br>
+					By: gawibowo<br>
+					<a href="http://themeforest.net/user/gawibowo?ref=gawibowo">Contact Form</a>
+					</strong>
+				</p>
+			</div><!-- end div .span-6 -->
+
+			<div class="span-12 last">
+				<p class="prepend-top append-0">Thank you for purchasing my theme. If you have any questions that are beyond the scope of this help file, please feel free to email via my user page contact form <a href="http://themeforest.net/user/gawibowo?ref=gawibowo">here</a>. Thanks so much!</p>
+			</div>
+		</div><!-- end div .borderTop -->
+
+		<hr>
+
+		<h2 id="toc" class="alt">Table of Contents</h2>
+		<ol class="alpha">
+			<li><a href="#installation">Installation</a></li>
+			<li><a href="#pages">Pages</a>
+				<ol>
+					<li><a href="#page-default">Default Page</a></li>
+					<li><a href="#page-blog">Page Template: Blog</a></li>
+					<li><a href="#page-content-builder">Page Template: Content Builder</a></li>
+					<li><a href="#page-contact">Page Template: Contact</a></li>
+					<li><a href="#page-home">Set a page as a Homepage</a></li>
+				</ol>
+			</li>
+			<li><a href="#posts">Posts</a>
+				<ol>
+					<li><a href="#post-default">Default Post</a></li>
+					<li><a href="#post-review">Review Post</a></li>
+				</ol>
+			</li>
+			<li><a href="#widgets">Widgets</a>
+				<ol>
+					<li><a href="#widget-ads-125">Ads 125px</a></li>
+					<li><a href="#widget-ads-300">Ads 300px</a></li>
+					<li><a href="#widget-comments">Comments</a></li>
+					<li><a href="#widget-contact">Contact</a></li>
+					<li><a href="#widget-facebook">Facebook</a></li>
+					<li><a href="#widget-flickr">Flickr</a></li>
+					<li><a href="#widget-posts">Posts</a></li>
+					<li><a href="#widget-reviews">Reviews</a></li>
+					<li><a href="#widget-social">Social</a></li>
+					<li><a href="#widget-subpages">Subpages</a></li>
+					<li><a href="#widget-video">Video</a></li>
+				</ol>
+			<li><a href="#menus">Menus</a></li>
+			<li><a href="#customizer">Theme Customizer</a>
+				<ol>
+					<li><a href="#customizer-general">General</a></li>
+					<li><a href="#customizer-featured">Featured Posts</a></li>
+					<li><a href="#customizer-slider">Slider</a></li>
+					<li><a href="#customizer-blog">Blog</a></li>
+					<li><a href="#customizer-single">Single Post</a></li>
+					<li><a href="#customizer-footer">Footer</a></li>
+					<li><a href="#customizer-maincol">Main Color</a></li>
+					<li><a href="#customizer-catcol">Category Colors</a></li>
+				</ol>
+			</li>
+			<li><a href="#theme-options">Theme Options</a></li>
+			<li><a href="#translation">Translation</a></li>
+			<li><a href="#child-themes">Using Child Themes</a></li>
+			<li><a href="#credits">Sources and Credits</a></li>
+		</ol>
+
+		<hr>
+
+		<div id="installation">
+			<h3><strong>A) Installation</strong> - <a href="#toc">top</a></h3>
+			<p>In order to begin installing Entrance theme, you need a working copy of WordPress installed on your own server (not on wordpress.com).</p>
+
+			<p>Extract the zipped package downloaded from ThemeForest to your desktop. In the extracted package you will find &quot;entrance&quot; folder which is the WordPress theme.</p>
+
+			<p>Upload the entrance folder to your <strong>wp-content/themes</strong> folder. Login to your WordPress admin panel and go to Appearance > Themes. Activate the theme.</p>
+
+			<p>If you want sample data (posts, page, categories, etc) you can import XML sample data in the &quot;sample-data&quot; folder. Go to Tools =&gt; Import menu and choose WordPress, in upload field choose the xml file and upload it.</p>
+		</div>
+
+		<hr>
+
+		<div id="pages">
+			<h3><strong>B) Pages</strong> - <a href="#toc">top</a></h3>
+
+			<p>To create a new page, go to Pages &raquo; Add New. The Add New Page screen will be like this:</p>
+
+			<img alt="" src="assets/images/page-add.png">
+
+			<ol>
+				<li>Enter your page title.</li>
+				<li>Enter your page content.</li>
+				<li>Page Attributes:
+					<ul>
+						<li>Parent: select a parent page if you want to use this page as a child page.</li>
+						<li>Template: if you want to create a standard page, you can leave it to &quot;Default Template&quot;. This theme also comes with custom page templates that you can choose: Blog, Contact Form and Content Builder.</li>
+					</ul>
+				</li>
+				<li>Below the content editor, you will find custom Meta Boxes. Default page has a custom meta box: Layout Options.
+					<ul>
+						<li>Layout Options:
+							<ul>
+								<li>Select a page layout: right sidebar, left sidebar, full width or default. If you choose default, it will use the default layout setting in <a href="#customizer-general">Theme Customizer &raquo; General</a></li>
+								<li>Select a sidebar: default sidebar or custom sidebars (generated from <a href="#options-sidebar">Theme Options &raquo; Sidebar Manager</a>).</li>
+							</ul>
+						</li>
+					</ul>
+					When you change the page template, additional custom meta boxes may appear, depends on the type of page. For example, if you choose Blog template, it will have Page Options &amp; Blog Options. More of this later (in each page templates).
+				</li>
+				<li>When you are done, click &quot;Publish&quot; button to save the page.</li>
+			</ol>
+
+			<div id="page-default">
+				<h4>Default Page - <a href="#toc">top</a></h4>
+				<img alt="" src="assets/images/page-default.png">
+				<p>Default page is a normal page without special formatting. It will show a standard title, content and featured image.</p>
+			</div>
+
+			<div id="page-blog">
+				<h4>Page Template: Blog - <a href="#toc">top</a></h4>
+
+				<img alt="" src="assets/images/page-blog.png">
+
+				<p>Blog template will show posts with some options.</p>
+
+				<ul>
+					<li><strong>Page Options</strong>: by default, Page title and content will be disabled in Blog template, but you can enable them from here.</li>
+					<li><strong>Blog style</strong>: Small Thumbnails, Large Thumbnails, Grid or Masonry.</li>
+					<li><strong>Number of Columns</strong>: choose a number of columns (2, 3 or 4) for grid/masonry style.</li>
+					<li><strong>Filter by category</strong>: select All Categories or filter posts by a category.</li>
+					<li><strong>Number of posts per page</strong>: enter the number of posts, you can leave this empty to use the setting from Reading Settings.</li>
+					<li><strong>Post Options</strong>: check/uncheck to show/hide post elements (featured image, category, rating, date, comments number, author, read more link).</li>
+					<li><strong>Show post content</strong>: show excerpt, full content or or don't show at all.</li>
+					<li><strong>Excerpt length</strong>: set the number of words for excerpt.</li>
+				</ul>
+
+				<img alt="" src="assets/images/meta-box-blog.png">
+			</div>
+
+			<div id="page-content-builder">
+				<h4>Page Template: Content Builder - <a href="#toc">top</a></h4>
+
+				<img alt="" src="assets/images/page-content-builder.png">
+
+				<p>Content Builder template allows you to manage posts in different styles easily using drag and drop. You can add multiple content blocks and each block can be configured differently:</p>
+
+				<ul>
+					<li><strong>Title</strong>: set the title of the content block. If you leave this empty, it will automatically set to the category name when you select a category from the dropdown.</li>
+					<li><strong>Filter by category</strong>: select All Categories or filter posts by a category.</li>
+					<li><strong>Style</strong>: select a style by clicking on one of the style images.</li>
+					<li><strong>Number of posts to show</strong>: set the maximum number of posts you want to show.</li>
+				</ul>
+
+				<img alt="" src="assets/images/meta-box-content-builder.png">
+			</div>
+
+			<div id="page-contact">
+				<h4>Page Template: Contact - <a href="#toc">top</a></h4>
+
+				<img alt="" src="assets/images/page-contact.png">
+
+				<p>Contact template will show a contact form. This will allow visitors to send a message to your email address. To set email address, subject and success message for the contact form, go to <a href="#options-contact">Theme Options &raquo; Contact Form</a>.</p>
+			</div>
+
+			<div id="page-home">
+				<h4>Set a page as a Homepage - <a href="#toc">top</a></h4>
+
+				<img alt="" src="assets/images/page-home.png">
+
+				<p>To set a page as a homepage:</p>
+
+				<ol>
+					<li>Go to Settings &raquo; Reading</li>
+					<li>On Front page displays, choose A static page and select the page from the front page dropdown.</li>
+					<li>Click Save button.</li>
+				</ol>
+
+				<p>If you don't set any page as a homepage, your homepage will show latest posts.</p>
+			</div>
+		</div>
+
+		<hr>
+
+		<div id="posts">
+			<h3><strong>C) Posts</strong> - <a href="#toc">top</a></h3>
+
+			<div id="post-default">
+				<h4>Default Post - <a href="#toc">top</a></h4>
+				<p>To create a new post:</p>
+				<ol>
+					<li>Go to Posts &raquo; Add New.</li>
+					<li>Enter your post title.</li>
+					<li>Enter your post content.</li>
+					<li>Choose categories or add a new category.</li>
+					<li>Add tags, separated by commas.</li>
+					<li id="featured-images">Set a featured image. Click on &quot;Set featured image&quot; link, a normal upload box will now appear, upload your image and click &quot;Use as featured image&quot;.<br>
+					<img alt="" src="assets/images/featured-image.png"></li>
+					<li>When you are done, click &quot;Publish&quot; button to save the post.</li>
+				</ol>
+			</div>
+
+			<div id="post-review">
+				<h4>Review Post - <a href="#toc">top</a></h4>
+				<p>To add a review post, click on the &quot;Enable review on this post&quot;. You can add as many rating as you want, each with a custom criteria. Overall rating will be calculated automatically.</p>
+				<img alt="" src="assets/images/meta-box-review.png">
+			</div>
+		</div>
+
+		<hr>
+
+ 		<div id="widgets">
+			<h3><strong>D) Widgets</strong> - <a href="#toc">top</a></h3>
+
+			<p>This theme has 3 widget areas for footer and 1 default sidebar. More sidebars can be added from <a href="#options-sidebar">Theme Options &raquo; Sidebar Manager</a>.</p>
+
+			<p>Here is the location of the widget areas:</p>
+
+			<img alt="" src="assets/images/widget-areas.png">
+
+			<p>You can insert any widgets into each area. To setup widgets, go to Apperance &raquo; Widgets and use the drag and drop interface to insert widgets into the desired widget areas.</p>
+
+			<img alt="" src="assets/images/custom-widgets.png">
+
+			<p>As an addition to the built-in WordPress widgets, this theme also has custom widgets: Ads 125px, Ads 300px, Comments, Contact, Facebook, Flickr, Posts, Reviews, Social, Subpages, Video.</p>
+
+			<div id="widget-ads-125">
+				<h4>Ads 125px - <a href="#toc">top</a></h4>
+				<img alt="" src="assets/images/widget-ads125-settings.png">
+				<p>Ads 125px widget allows you to show banners, each banner has a 125 pixels width. You can customize the widget title, banner image url and banner link.</p>
+			</div>
+
+			<div id="widget-ads-300">
+				<h4>Ads 300px - <a href="#toc">top</a></h4>
+				<img alt="" src="assets/images/widget-ads300-settings.png">
+				<p>Ads 300px widget allows you to show a banner with a 300 pixels width. You can customize the widget title, banner image url and banner link.</p>
+			</div>
+
+			<div id="widget-comments">
+				<h4>Comments - <a href="#toc">top</a></h4>
+				<img alt="" src="assets/images/widget-comments-settings.png">
+				<p>Comments widget allows you to show recent comments with an option to show avatar.</p>
+			</div>
+
+			<div id="widget-contact">
+				<h4>Contact - <a href="#toc">top</a></h4>
+				<img alt="" src="assets/images/widget-contact-settings.png">
+				<p>Comments widget allows you to show an ajax contact form. To set email address, subject and success message for the contact form, go to <a href="#options-contact">Theme Options &raquo; Contact</a>.</p>
+			</div>
+
+			<div id="widget-facebook">
+				<h4>Facebook - <a href="#toc">top</a></h4>
+				<img alt="" src="assets/images/widget-facebook-settings.png">
+				<p>Facebook widget allows you to show a facebook likebox.</p>
+			</div>
+
+			<div id="widget-flickr">
+				<h4>Flickr - <a href="#toc">top</a></h4>
+				<img alt="" src="assets/images/widget-flickr-settings.png">
+				<p>Flickr widget allows you to add recent images uploaded to your flickr account. You can customize your Flickr ID, number of photos to show and the display order (latest/random) from the widget settings. To find your Flickr ID, use <a href="http://idgettr.com">http://idgettr.com</a></p>
+			</div>
+
+			<div id="widget-posts">
+				<h4>Posts - <a href="#toc">top</a></h4>
+				<img alt="" src="assets/images/widget-posts-settings.png">
+				<p>Posts widget allows you to show posts with these options:</p>
+				<ul>
+					<li><strong>Post order</strong>: Recent, Popular or Random order.</li>
+					<li><strong>Filter by Category</strong>: select All Categories or filter posts by a category.</li>
+					<li><strong>Number of posts to show</strong></li>
+					<li><strong>Show thumbnail</strong>: check this option to show thumbnail.</li>
+					<li><strong>Thumbnail size</strong>: Small, Large, or Mixed (large thumbnail only on first item)</li>
+					<li><strong>Show category</strong>: check this option to show category.</li>
+					<li><strong>Show rating</strong>: check this option to show rating (if review enabled).</li>
+					<li><strong>Show date</strong>: check this option to show date.</li>
+					<li><strong>Show comments number</strong>: check this option to show comments number.</li>
+					<li><strong>Show author</strong>: check this option to show author.</li>
+					<li><strong>Show excerpt</strong>: show on first item, show on all items, or don't show at all.</li>
+				</ul>
+			</div>
+
+			<div id="widget-reviews">
+				<h4>Reviews - <a href="#toc">top</a></h4>
+				<img alt="" src="assets/images/widget-reviews-settings.png">
+				<p>Reviews widgets allows you to show a list of latest review posts.</p>
+			</div>
+
+			<div id="widget-social">
+				<h4>Social - <a href="#toc">top</a></h4>
+				<img alt="" src="assets/images/widget-social-settings.png">
+				<p>Social widget allows you to show social links with icons, with options:</p>
+				<ul>
+					<li><strong>Icon size</strong>: Small or Large.</li>
+					<li><strong>Icon frame</strong>: Square, Rounded Square or Circle.</li>
+					<li><strong>Style</strong>: Horizontal or Vertical.</li>
+					<li><strong>Color on hover</strong>: check this option to show icons without colors, but the colors will be enabled when you hover on each icon.</li>
+				</ul>
+				<p>You can choose from 15 available icons and set the link and text for each icon.</p>
+			</div>
+
+			<div id="widget-subpages">
+				<h4>Subpages - <a href="#toc">top</a></h4>
+				<img alt="" src="assets/images/widget-subpages-settings.png">
+				<p>Subpages widget allows you to show child pages of current page or any page. You can customize parent page (Enter a Page ID, or leave empty for current page), sort by and exclude page IDs from the widget settings.</p>
+			</div>
+
+			<div id="widget-video">
+				<h4>Video - <a href="#toc">top</a></h4>
+				<img alt="" src="assets/images/widget-video-settings.png">
+				<p>Video widget allows you to show a video and a description. Video can be added from youtube, vimeo or other video sharing sites that provide embed codes. You can customize your video embed code and the description from the widget settings.</p>
+			</div>
+		</div>
+
+		<hr>
+
+		<div id="menus">
+			<h3><strong>E) Menus</strong> - <a href="#toc">top</a></h3>
+
+			<p>This theme supports a multi-level dropdown menu that can be set from Appearance &raquo; Menus.</p>
+
+			<img alt="" src="assets/images/main-menu.png">
+
+			<p>To setup the menus, go to Appearance &raquo; Menus. Enter a name for your menu and add links to the menu by using the options on the left sidebar. You can add your menu items using the drag and drop functionality. After setting up your menu, go to Manage Locations and select the menu you just created from the theme location dropdown box and click Save Changes.</p>
+
+			<img alt="" src="assets/images/menu-settings.png">
+
+			<p>You can create more custom menus for use within the custom menu widget. Once you have built your menu, save it, and use it from a custom menu widget in Appearance &raquo; Widgets</p>
+
+			<p>For more details of addings, deleting, and maintaining menus, please visit <a href="http://codex.wordpress.org/WordPress_Menu_User_Guide" target="_blank">WordPress Menu User Guide</a>.</p>
+		</div>
+
+		<hr>
+
+
+		<div id="customizer">
+			<h3><strong>F) Theme Customizer</strong> - <a href="#toc">top</a></h3>
+
+			<img src="assets/images/customizer.png" alt="">
+
+			<p>Most of frontend settings for this theme can be set from the Theme Customizer. To access the Theme Customizer, go to Appearance &raquo; Customize. Theme Customizer allows you to tweak theme's settings and see a preview of those changes in real time.</p>
+
+			<p>WordPress already has some settings in the customizer and this theme added more sections: General, Header, Featured Posts, Slider, Blog, Single Post, Footer, Main Color and Category Colors.</p>
+
+			<p>When you are done making your changes, press the &quot;Save &amp; Publish&quot; button in the top of the theme customizer.</p>
+
+			<div id="customizer-general">
+				<h4><strong>General</strong> - <a href="#toc">top</a></h4>
+
+				<img src="assets/images/customizer-general.png" alt="">
+
+				<ul>
+					<li><strong>Enable boxed layout</strong>: check this if you want to use boxed layout. You can use background color/image only if you activate boxed layout.</li>
+					<li><strong>Default sidebar alignment</strong>: choose a layout for sidebar alignment. Right sidebar, left sidebar or full width (no sidebar). This will be the default layout, you can change the layout individually on each page/post settings.</li>
+					<li><strong>Enable retina display support</strong>: check this of you want to enable support for retina display. All images will be twice as large if you view the site from a retina device. Please make sure that you uploaded a large enough images for your posts.</li>
+					<li><strong>Main logo</strong>: upload an image here to set it as the site's logo. If no image set, your Site Title and Tagline will be used.</li>
+					<li><strong>Main logo height (in pixels)</strong>: set the height of the main logo. The width will be adjusted automatically.</li>
+					<li><strong>Login logo</strong>: if you want to change your login page logo (http://www.yourdomain.com/wp-admin), you can upload your image here.</li>
+					<li><strong>Favicon</strong>: if you want to set the favicon, you can upload your image here. A favicon is a 16 pixel x 16 pixel image that appears next the URL in most web browsers.</li>
+					<li><strong>Enable breadcrumb navigation</strong>: check this option to show breadcrumb navigation above the page title.</li>
+					<li><strong>Breadcrumb prefix</strong>: enter text to be inserted before the breadcrumb.</li>
+				</ul>
+			</div>
+
+			<div id="customizer-featured">
+				<h4><strong>Featured Posts</strong> - <a href="#toc">top</a></h4>
+
+				<img src="assets/images/customizer-featured.png" alt="">
+
+				<p>This section is for Featured Posts customization. If enabled, the Featured Posts will appear on the homepage. Featured Posts come from posts with a user defined tags (default tag is &quot;featured&quot;) or sticky posts.</p>
+
+				<p>Please note, the post must have a featured image. If the featured image is not found, the post will not show up in the Featured Posts.</p>
+
+				<ul>
+					<li><strong>Enable featured posts</strong>: check this to enable the Featured Posts</li>
+					<li><strong>Tag(s)</strong>: enter tags you want to appear in the Featured Posts. If you enter the tag &quot;featured&quot; the Featured Posts will look for posts with that tag and show them. You can enter more than one tag here, separated by commas. To enable sticky posts, please set this option to empty.</li>
+					<li><strong>Layout</strong>: choose Grid or Slider layout. If you choose grid, 5 posts will be displayed.</li>
+				</ul>
+			</div>
+
+			<div id="customizer-slider">
+				<h4><strong>Slider</strong> - <a href="#toc">top</a></h4>
+
+				<img src="assets/images/customizer-slider.png" alt="">
+
+				<p>If you choose Slider layout in Featured Posts, you can customize the slider here.</p>
+
+				<ul>
+					<li><strong>Number of slides</strong>: set maximum number of slides.</li>
+					<li><strong>Animation</strong>: choose a transition effect: slide or fade.</li>
+					<li><strong>Slideshow Speed</strong>: enter a number to set the speed of the slideshow cycling, in milliseconds</li>
+					<li><strong>Animation Speed</strong>: enter a number to set the speed of animations, in milliseconds</li>
+					<li><strong>Pause on Hover</strong>: check this if you want to pause the slideshow when hovering over slider</li>
+				</ul>
+			</div>
+
+			<div id="customizer-blog">
+				<h4><strong>Blog</strong> - <a href="#toc">top</a></h4>
+
+				<img src="assets/images/customizer-blog.png" alt="">
+
+				<p>This section is for pages that shows a list of posts, like blog, search result, archives (category archives, tag archives, author archives, etc).</p>
+
+				<p>You can show/hide these post elements:</p>
+
+				<ul>
+					<li>Featured image</li>
+					<li>Category</li>
+					<li>Rating</li>
+					<li>Date</li>
+					<li>Comments number</li>
+					<li>Author</li>
+					<li>Read more link</li>
+				</ul>
+
+				<p>And you can also choose to show/hide the post content (excerpt/full) and set the number of words for excerpt.</p>
+
+				<p>Please note: for <a href="#page-blog">blog templates</a>, please use the settings on page edit screen (meta box).</p>
+			</div>
+
+			<div id="customizer-single">
+				<h4><strong>Single Post</strong> - <a href="#toc">top</a></h4>
+
+				<img src="assets/images/customizer-single.png" alt="">
+
+				<p>This section is for single post view. You can choose to show/hide these elements:</p>
+
+				<ul>
+					<li>Category</li>
+					<li>Date</li>
+					<li>Author name</li>
+					<li>Featured Image</li>
+					<li>Tags</li>
+					<li>Author Info</li>
+					<li>Related Posts</li>
+				</ul>
+			</div>
+
+			<div id="customizer-footer">
+				<h4><strong>Footer</strong> - <a href="#toc">top</a></h4>
+
+				<img src="assets/images/customizer-footer.png" alt="">
+
+				<ul>
+					<li><strong>Show footer widget area</strong>: check this option to enable footer widget area.</li>
+					<li><strong>Footer text 1</strong>: enter a text like copyright information or any text you want.</li>
+					<li><strong>Footer text 2</strong>: enter a text like copyright information or any text you want.</li>
+				</ul>
+			</div>
+
+			<div id="customizer-maincol">
+				<h4><strong>Main Color</strong> - <a href="#toc">top</a></h4>
+
+				<img src="assets/images/customizer-maincol.png" alt="">
+
+				<p>Main color is the primary color for this theme, used for links, active menu item, buttons, etc.</p>
+
+				<p>You can choose one of the predefined colors from the bottom of the color picker, or use the color picker to choose more custom colors.</p>
+			</div>
+
+			<div id="customizer-catcol">
+				<h4><strong>Category Colors</strong> - <a href="#toc">top</a></h4>
+
+				<img src="assets/images/customizer-catcol.png" alt="">
+
+				<p>Beside the main color, you can also set custom color for categories. If you enable this option, each category can have different colors. If disabled, main color will be used for all categories.</p>
+			</div>
+		</div>
+
+		<div id="theme-options">
+			<h3><strong>G) Theme Options</strong> - <a href="#toc">top</a></h3>
+			<p>Beside the Theme Customizer, this theme also comes with Theme Options to customize some more features.</p>
+
+			<p>To use Theme Options, go to Appearance &raquo; Theme Options.</p>
+
+			<div id="options-general">
+				<h4><strong>General</strong> - <a href="#toc">top</a></h4>
+
+				<img alt="" src="assets/images/options-general.png">
+
+				<ul>
+					<li><strong>Theme Update Notifier</strong>: check this option to get notified when a new theme update is available.</li>
+					<li><strong>Enable Review</strong>: you must enable this option to be able to add rating to a post. This option will enable Review Settings in post meta box.</li>
+				</ul>
+			</div>
+
+			<div id="options-social">
+				<h4><strong>Social</strong> - <a href="#toc">top</a></h4>
+
+				<img alt="" src="assets/images/options-social.png">
+
+				<p>You can use this option to set maximum number of items in social widgets (default is 6 items).</p>
+			</div>
+
+			<div id="options-sidebar">
+				<h4><strong>Sidebar Manager</strong> - <a href="#toc">top</a></h4>
+
+				<img alt="" src="assets/images/options-sidebar.png">
+
+				<p>In this section you can add custom sidebars to be used in posts/pages.</p>
+			</div>
+
+			<div id="options-contact">
+				<h4><strong>Contact Form</strong> - <a href="#toc">top</a></h4>
+
+				<img alt="" src="assets/images/options-contact.png">
+
+				<p>In this section you can set email address, subject and success message for contact page template and contact form widget.</p>
+			</div>
+
+			<div id="options-scripts">
+				<h4><strong>Scripts</strong> - <a href="#toc">top</a></h4>
+
+				<img alt="" src="assets/images/options-scripts.png">
+
+				<p>You can enter your custom scripts (such as Google Analytics or other statistics code) here. It will be inserted before the closing body tag.</p>
+			</div>
+
+			<p>When you are done making your changes, press the &quot;Save All Settings&quot; button in the bottom-left of the options panel.</p>
+		</div>
+
+
+		<hr>
+
+		<div id="translation">
+			<h3><strong>H) Translation</strong> - <a href="#toc">top</a></h3>
+
+			<p>To translate this theme, you can use an application called &quot;PoEdit&quot; and you can download it for FREE here: <a href="http://www.poedit.net/">http://www.poedit.net/</a>. Once you installed it:</p>
+			<ul>
+				<li>Open the lang directory and copy the default.po into a new file, for example <code>id_ID.po</code> for Indonesian language.</li>
+				<li>Edit <code>id_ID.po</code> with Poedit and add translations in this file. After this file saved, <code>id_ID.mo</code> file will be generated. Upload the .mo and .po files into your entrance/lang folder on your live site.</li>
+				<li>Open <code>wp-config.php</code> and edit the WPLANG definition into: <pre>define('WPLANG', 'id_ID');</pre></li>
+			</ul>
+			<p>Replace <code>id_ID</code> with your language code. Languages list can be found here: <a href="http://codex.wordpress.org/WordPress_in_Your_Language">http://codex.wordpress.org/WordPress_in_Your_Language</a></p>
+		</div>
+
+		<hr>
+
+		<div id="child-themes">
+			<h3><strong>I) Using Child Themes</strong> - <a href="#toc">top</a></h3>
+
+			<p>If you want to make modifications on this theme, it is recommended to use a child theme. This theme comes with a blank child theme that you can use. In the theme package you can find &quot;entrance-child&quot; folder. Upload this folder to your <strong>wp-content/themes</strong> folder, and activate it from the Appearance &raquo; Themes page.</p>
+
+			<p>Once activated, you can start editing inside this &quot;entrance-child&quot; folder. This child theme includes 2 files that you can use to override parent theme's style (style.css) and function (functions.php). By using a child theme, you will leave the parent theme unmodified, so when a theme update is available, you can simply replace the parent theme without worry about your modified code. For more info about using child themes, please visit this link: <a href="http://codex.wordpress.org/Child_Themes">http://codex.wordpress.org/Child_Themes</a></p>
+		</div>
+
+		<hr>
+
+		<div id="credits">
+			<h3><strong>J) Sources and Credits</strong> - <a href="#toc">top</a></h3>
+
+			<p>I've used the following images, icons or other files as listed.</p>
+
+			<ul>
+				<li>jQuery - <a href="http://jquery.com/">http://jquery.com/</a></li>
+				<li>Twitter Bootstrap - <a href="http://getbootstrap.com/">http://getbootstrap.com/</a></li>
+				<li>Font Awesome - <a href="http://fontawesome.io/">http://fontawesome.io/</a></li>
+				<li>Flex Slider - <a href="http://www.woothemes.com/flexslider/">http://www.woothemes.com/flexslider/</a></li>
+				<li>jQuery Easing - <a href="http://gsgd.co.uk/sandbox/jquery/easing/">http://gsgd.co.uk/sandbox/jquery/easing/</a></li>
+				<li>jQuery Masonry - <a href="http://masonry.desandro.com/">http://masonry.desandro.com/</a></li>
+				<li>jQuery Mobile Menu - <a href="http://github.com/mambows/mobilemenu">http://github.com/mambows/mobilemenu</a></li>
+				<li>prettyPhoto - <a href="http://www.no-margin-for-errors.com/projects/prettyphoto-jquery-lightbox-clone/">http://www.no-margin-for-errors.com/projects/prettyphoto-jquery-lightbox-clone/</a></li>
+				<li>Aqua Resizer - <a href="http://aquagraphite.com/2012/05/aqua-resizer/">http://aquagraphite.com/2012/05/aqua-resizer/</a></li>
+				<li>TGM Plugin Activation - <a href="http://tgmpluginactivation.com/">http://tgmpluginactivation.com/</a></li>
+				<li>WordPress Theme Update Notifier - <a href="http://github.com/unisphere/unisphere_notifier">http://github.com/unisphere/unisphere_notifier</a></li>
+				<li>FitVids.js - <a href="https://github.com/davatron5000/FitVids.js">https://github.com/davatron5000/FitVids.js</a></li>
+				<li>retina.js - <a href="https://github.com/imulus/retinajs">https://github.com/imulus/retinajs</a></li>
+				<li>Unsplash - <a href="http://unsplash.com/">http://unsplash.com/</a></li>
+				<li>Picjumbo - <a href="http://picjumbo.com/">http://picjumbo.com/</a></li>
+			</ul>
+		</div>
+
+		<hr>
+
+		<p>Once again, thank you so much for purchasing this theme. As I said at the beginning, I'd be glad to help you if you have any questions relating to this theme. No guarantees, but I'll do my best to assist. If you have a more general question relating to the themes on ThemeForest, you might consider visiting the forums and asking your question in the &quot;Item Discussion&quot; section.</p>
+
+		<p class="append-bottom alt large"><strong>gawibowo</strong></p>
+		<p><a href="#toc">Go To Table of Contents</a></p>
+
+		<hr class="space">
+	</div><!-- end div .container -->
+</body>
+</html>

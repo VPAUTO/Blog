@@ -1,4 +1,4 @@
-/* global getUserSetting, tinymce, QTags, wpActiveEditor */
+/* global getUserSetting, tinymce, QTags */
 
 // WordPress, TinyMCE, and Media
 // -----------------------------
@@ -757,10 +757,15 @@
 		 * @param {string} html Content to send to the editor
 		 */
 		insert: function( html ) {
-			var editor,
+			var editor, wpActiveEditor,
 				hasTinymce = ! _.isUndefined( window.tinymce ),
-				hasQuicktags = ! _.isUndefined( window.QTags ),
+				hasQuicktags = ! _.isUndefined( window.QTags );
+
+			if ( this.activeEditor ) {
+				wpActiveEditor = window.wpActiveEditor = this.activeEditor;
+			} else {
 				wpActiveEditor = window.wpActiveEditor;
+			}
 
 			// Delegate to the global `send_to_editor` if it exists.
 			// This attempts to play nice with any themes/plugins that have
@@ -875,7 +880,7 @@
 
 				if ( 'link' === type ) {
 					_.defaults( embed, {
-						title:   embed.url,
+						linkText: embed.url,
 						linkUrl: embed.url
 					});
 
@@ -921,7 +926,7 @@
 			}
 
 			// If an empty `id` is provided, default to `wpActiveEditor`.
-			id = wpActiveEditor;
+			id = window.wpActiveEditor;
 
 			// If that doesn't work, fall back to `tinymce.activeEditor.id`.
 			if ( ! id && ! _.isUndefined( window.tinymce ) && tinymce.activeEditor ) {
@@ -1029,11 +1034,11 @@
 			 */
 			link: function( embed ) {
 				return wp.media.post( 'send-link-to-editor', {
-					nonce:   wp.media.view.settings.nonce.sendToEditor,
-					src:     embed.linkUrl,
-					title:   embed.title,
-					html:    wp.media.string.link( embed ),
-					post_id: wp.media.view.settings.post.id
+					nonce:     wp.media.view.settings.nonce.sendToEditor,
+					src:       embed.linkUrl,
+					link_text: embed.linkText,
+					html:      wp.media.string.link( embed ),
+					post_id:   wp.media.view.settings.post.id
 				});
 			}
 		},
@@ -1053,17 +1058,8 @@
 			options = options || {};
 
 			id = this.id( id );
-/*
-			// Save a bookmark of the caret position in IE.
-			if ( ! _.isUndefined( window.tinymce ) ) {
-				editor = tinymce.get( id );
+			this.activeEditor = id;
 
-				if ( tinymce.isIE && editor && ! editor.isHidden() ) {
-					editor.focus();
-					editor.windowManager.insertimagebookmark = editor.selection.getBookmark();
-				}
-			}
-*/
 			workflow = this.get( id );
 
 			// Redo workflow if state has changed
@@ -1081,7 +1077,7 @@
 		 */
 		init: function() {
 			$(document.body)
-				.on( 'click', '.insert-media', function( event ) {
+				.on( 'click.add-media-button', '.insert-media', function( event ) {
 					var elem = $( event.currentTarget ),
 						editor = elem.data('editor'),
 						options = {
@@ -1097,7 +1093,7 @@
 					// Prevents Opera from showing the outline of the button
 					// above the modal.
 					//
-					// See: http://core.trac.wordpress.org/ticket/22445
+					// See: https://core.trac.wordpress.org/ticket/22445
 					elem.blur();
 
 					if ( elem.hasClass( 'gallery' ) ) {

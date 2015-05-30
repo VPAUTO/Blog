@@ -38,8 +38,13 @@ require_once( dirname( dirname( __FILE__ ) ) . '/wp-load.php' );
 /** Load WordPress Administration Upgrade API */
 require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
 
+/** Load WordPress Translation Install API */
+require_once( ABSPATH . 'wp-admin/includes/translation-install.php' );
+
 /** Load wpdb */
 require_once( ABSPATH . WPINC . '/wp-db.php' );
+
+nocache_headers();
 
 $step = isset( $_GET['step'] ) ? (int) $_GET['step'] : 0;
 
@@ -113,7 +118,7 @@ function display_setup_form( $error = null ) {
 				echo '<input name="user_name" type="hidden" value="admin" />';
 			} else {
 				?><input name="user_name" type="text" id="user_login" size="25" value="<?php echo esc_attr( sanitize_user( $user_name, true ) ); ?>" />
-				<p><?php _e( 'Usernames can have only alphanumeric characters, spaces, underscores, hyphens, periods and the @ symbol.' ); ?></p>
+				<p><?php _e( 'Usernames can have only alphanumeric characters, spaces, underscores, hyphens, periods, and the @ symbol.' ); ?></p>
 			<?php
 			} ?>
 			</td>
@@ -128,7 +133,7 @@ function display_setup_form( $error = null ) {
 				<input name="admin_password" type="password" id="pass1" size="25" value="" />
 				<p><input name="admin_password2" type="password" id="pass2" size="25" value="" /></p>
 				<div id="pass-strength-result"><?php _e('Strength indicator'); ?></div>
-				<p><?php _e('Hint: The password should be at least seven characters long. To make it stronger, use upper and lower case letters, numbers, and symbols like ! " ? $ % ^ &amp; ).'); ?></p>
+				<p><?php echo wp_get_password_hint(); ?></p>
 			</td>
 		</tr>
 		<?php endif; ?>
@@ -138,7 +143,7 @@ function display_setup_form( $error = null ) {
 			<p><?php _e( 'Double-check your email address before continuing.' ); ?></p></td>
 		</tr>
 		<tr>
-			<th scope="row"><label for="blog_public"><?php _e( 'Privacy' ); ?></label></th>
+			<th scope="row"><?php _e( 'Privacy' ); ?></th>
 			<td colspan="2"><label><input type="checkbox" name="blog_public" id="blog_public" value="1" <?php checked( $blog_public ); ?> /> <?php _e( 'Allow search engines to index this site.' ); ?></label></td>
 		</tr>
 	</table>
@@ -154,17 +159,19 @@ if ( is_blog_installed() ) {
 	die( '<h1>' . __( 'Already Installed' ) . '</h1><p>' . __( 'You appear to have already installed WordPress. To reinstall please clear your old database tables first.' ) . '</p><p class="step"><a href="../wp-login.php" class="button button-large">' . __( 'Log In' ) . '</a></p></body></html>' );
 }
 
+global $wp_version, $required_php_version, $required_mysql_version;
+
 $php_version    = phpversion();
 $mysql_version  = $wpdb->db_version();
 $php_compat     = version_compare( $php_version, $required_php_version, '>=' );
 $mysql_compat   = version_compare( $mysql_version, $required_mysql_version, '>=' ) || file_exists( WP_CONTENT_DIR . '/db.php' );
 
 if ( !$mysql_compat && !$php_compat )
-	$compat = sprintf( __( 'You cannot install because <a href="http://codex.wordpress.org/Version_%1$s">WordPress %1$s</a> requires PHP version %2$s or higher and MySQL version %3$s or higher. You are running PHP version %4$s and MySQL version %5$s.' ), $wp_version, $required_php_version, $required_mysql_version, $php_version, $mysql_version );
+	$compat = sprintf( __( 'You cannot install because <a href="https://codex.wordpress.org/Version_%1$s">WordPress %1$s</a> requires PHP version %2$s or higher and MySQL version %3$s or higher. You are running PHP version %4$s and MySQL version %5$s.' ), $wp_version, $required_php_version, $required_mysql_version, $php_version, $mysql_version );
 elseif ( !$php_compat )
-	$compat = sprintf( __( 'You cannot install because <a href="http://codex.wordpress.org/Version_%1$s">WordPress %1$s</a> requires PHP version %2$s or higher. You are running version %3$s.' ), $wp_version, $required_php_version, $php_version );
+	$compat = sprintf( __( 'You cannot install because <a href="https://codex.wordpress.org/Version_%1$s">WordPress %1$s</a> requires PHP version %2$s or higher. You are running version %3$s.' ), $wp_version, $required_php_version, $php_version );
 elseif ( !$mysql_compat )
-	$compat = sprintf( __( 'You cannot install because <a href="http://codex.wordpress.org/Version_%1$s">WordPress %1$s</a> requires MySQL version %2$s or higher. You are running version %3$s.' ), $wp_version, $required_mysql_version, $mysql_version );
+	$compat = sprintf( __( 'You cannot install because <a href="https://codex.wordpress.org/Version_%1$s">WordPress %1$s</a> requires MySQL version %2$s or higher. You are running version %3$s.' ), $wp_version, $required_mysql_version, $mysql_version );
 
 if ( !$mysql_compat || !$php_compat ) {
 	display_header();
@@ -176,10 +183,17 @@ if ( ! is_string( $wpdb->base_prefix ) || '' === $wpdb->base_prefix ) {
 	die( '<h1>' . __( 'Configuration Error' ) . '</h1><p>' . __( 'Your <code>wp-config.php</code> file has an empty database table prefix, which is not supported.' ) . '</p></body></html>' );
 }
 
+$language = '';
+if ( ! empty( $_REQUEST['language'] ) ) {
+	$language = preg_replace( '/[^a-zA-Z_]/', '', $_REQUEST['language'] );
+} elseif ( isset( $GLOBALS['wp_local_package'] ) ) {
+	$language = $GLOBALS['wp_local_package'];
+}
+
 switch($step) {
 	case 0: // Step 0
 
-		if ( empty( $_GET['language'] ) && ( $languages = wp_get_available_translations_from_api() ) ) {
+		if ( wp_can_install_language_pack() && empty( $language ) && ( $languages = wp_get_available_translations() ) ) {
 			display_header( 'language-chooser' );
 			echo '<form id="setup" method="post" action="?step=1">';
 			wp_install_language_form( $languages );
@@ -190,17 +204,18 @@ switch($step) {
 		// Deliberately fall through if we can't reach the translations API.
 
 	case 1: // Step 1, direct link or from language chooser.
-		if ( ! empty( $_REQUEST['language'] ) ) {
-			$loaded_language = wp_install_download_language_pack( $_REQUEST['language'] );
+		if ( ! empty( $language ) ) {
+			$loaded_language = wp_download_language_pack( $language );
 			if ( $loaded_language ) {
-				wp_install_load_language( $loaded_language );
+				load_default_textdomain( $loaded_language );
+				$GLOBALS['wp_locale'] = new WP_Locale();
 			}
 		}
 
 		display_header();
 ?>
 <h1><?php _ex( 'Welcome', 'Howdy' ); ?></h1>
-<p><?php printf( __( 'Welcome to the famous five minute WordPress installation process! You may want to browse the <a href="%s">ReadMe documentation</a> at your leisure. Otherwise, just fill in the information below and you&#8217;ll be on your way to using the most extendable and powerful personal publishing platform in the world.' ), '../readme.html' ); ?></p>
+<p><?php _e( 'Welcome to the famous five-minute WordPress installation process! Just fill in the information below and you&#8217;ll be on your way to using the most extendable and powerful personal publishing platform in the world.' ); ?></p>
 
 <h1><?php _e( 'Information needed' ); ?></h1>
 <p><?php _e( 'Please provide the following information. Don&#8217;t worry, you can always change these settings later.' ); ?></p>
@@ -209,7 +224,12 @@ switch($step) {
 		display_setup_form();
 		break;
 	case 2:
-		$loaded_language = wp_install_load_language( $_REQUEST['language'] );
+		if ( ! empty( $language ) && load_default_textdomain( $language ) ) {
+			$loaded_language = $language;
+			$GLOBALS['wp_locale'] = new WP_Locale();
+		} else {
+			$loaded_language = 'en_US';
+		}
 
 		if ( ! empty( $wpdb->error ) )
 			wp_die( $wpdb->error->get_error_message() );
@@ -220,8 +240,8 @@ switch($step) {
 		$user_name = isset($_POST['user_name']) ? trim( wp_unslash( $_POST['user_name'] ) ) : '';
 		$admin_password = isset($_POST['admin_password']) ? wp_unslash( $_POST['admin_password'] ) : '';
 		$admin_password_check = isset($_POST['admin_password2']) ? wp_unslash( $_POST['admin_password2'] ) : '';
-		$admin_email  = isset( $_POST['admin_email']  ) ?trim( wp_unslash( $_POST['admin_email'] ) ) : '';
-		$public       = isset( $_POST['blog_public']  ) ? (int) $_POST['blog_public'] : 0;
+		$admin_email  = isset( $_POST['admin_email'] ) ?trim( wp_unslash( $_POST['admin_email'] ) ) : '';
+		$public       = isset( $_POST['blog_public'] ) ? (int) $_POST['blog_public'] : 0;
 
 		// Check e-mail address.
 		$error = false;
@@ -236,7 +256,7 @@ switch($step) {
 			// TODO: poka-yoke
 			display_setup_form( __( 'Your passwords do not match. Please try again.' ) );
 			$error = true;
-		} else if ( empty( $admin_email ) ) {
+		} elseif ( empty( $admin_email ) ) {
 			// TODO: poka-yoke
 			display_setup_form( __( 'You must provide an email address.' ) );
 			$error = true;

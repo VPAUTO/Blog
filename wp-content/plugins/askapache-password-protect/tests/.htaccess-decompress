@@ -1,0 +1,84 @@
+
+
+
+
+
+
+
+# +ASKAPACHE PASSPRO 4.6.10
+#######################################################
+#               __                          __
+#   ____ ______/ /______ _____  ____ ______/ /_  ___
+#  / __ `/ ___/ //_/ __ `/ __ \/ __ `/ ___/ __ \/ _ \ 
+# / /_/ (__  ) ,< / /_/ / /_/ / /_/ / /__/ / / /  __/
+# \__,_/____/_/|_|\__,_/ .___/\__,_/\___/_/ /_/\___/
+#                     /_/
+# - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# +APRO SIDS
+# +SID Test
+DirectoryIndex test.gif /wp-content/plugins/askapache-password-protect/tests/test.gif
+Options +FollowSymLinks
+ServerSignature On
+ErrorDocument 401 /wp-content/plugins/askapache-password-protect/tests/err.php
+ErrorDocument 403 /wp-content/plugins/askapache-password-protect/tests/err.php
+ErrorDocument 404 /wp-content/plugins/askapache-password-protect/tests/err.php
+ErrorDocument 500 /wp-content/plugins/askapache-password-protect/tests/err.php
+<IfModule mod_alias.c>
+RedirectMatch 305 ^.*modaliastest$ http://blog.vpauto.fr
+</IfModule>
+<IfModule mod_rewrite.c>
+RewriteEngine On
+RewriteBase /
+RewriteCond %{QUERY_STRING} modrewritetest [NC]
+RewriteRule .* http://blog.vpauto.fr [R=307,L]
+</IfModule>
+<Files modsec_check.gif>
+<IfModule mod_security.c>
+SetEnv MODSEC_ENABLE On
+SecFilterEngine On
+SecFilterDefaultAction "nolog,noauditlog,pass"
+SecAuditEngine Off
+SecFilterInheritance Off
+SecFilter modsecuritytest "deny,nolog,noauditlog,status:503"
+Deny from All
+</IfModule>
+</Files>
+<Files basic_auth_test.gif>
+AuthType Basic
+AuthName "askapache test"
+AuthUserFile /var/www/blog/wp-content/plugins/askapache-password-protect/tests/.htpasswd-basic
+Require valid-user
+</Files>
+<Files digest_check.gif>
+AuthType Digest
+AuthName "askapache test"
+AuthDigestDomain /wp-content/plugins/askapache-password-protect/tests/ http://blog.vpauto.fr/wp-content/plugins/askapache-password-protect/tests/
+AuthUserFile /var/www/blog/wp-content/plugins/askapache-password-protect/tests/.htpasswd-digest
+Require none
+</Files>
+<Files authdigestfile_test.gif>
+AuthType Digest
+AuthName "askapache test"
+AuthDigestDomain /wp-content/plugins/askapache-password-protect/tests/ http://blog.vpauto.fr/wp-content/plugins/askapache-password-protect/tests/
+AuthUserFile /var/www/blog/wp-content/plugins/askapache-password-protect/tests/.htpasswd-digest
+Require valid-user
+</Files>
+<Files authuserfile_test.gif>
+AuthType Digest
+AuthName "askapache test"
+AuthDigestDomain /wp-content/plugins/askapache-password-protect/tests/ http://blog.vpauto.fr/wp-content/plugins/askapache-password-protect/tests/
+AuthUserFile /var/www/blog/wp-content/plugins/askapache-password-protect/tests/.htpasswd-digest
+Require valid-user
+</Files>
+# -SID Test
+# -APRO SIDS
+# - - - - - - - - - - - - - - - - - - - - - - - - - - -
+#               __                          __
+#   ____ ______/ /______ _____  ____ ______/ /_  ___
+#  / __ `/ ___/ //_/ __ `/ __ \/ __ `/ ___/ __ \/ _ \ 
+# / /_/ (__  ) ,< / /_/ / /_/ / /_/ / /__/ / / /  __/
+# \__,_/____/_/|_|\__,_/ .___/\__,_/\___/_/ /_/\___/
+#                     /_/
+#######################################################
+# -ASKAPACHE PASSPRO 4.6.10
+

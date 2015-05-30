@@ -13,6 +13,11 @@
  * @since 3.0.0
  */
 
+// Functions
+add_action( 'update_option_blog_public', 'update_blog_public', 10, 2 );
+add_filter( 'option_users_can_register', 'users_can_register_signup_filter' );
+add_filter( 'site_option_welcome_user_email', 'welcome_user_msg_filter' );
+
 // Users
 add_filter( 'wpmu_validate_user_signup', 'signup_nonce_check' );
 add_action( 'init', 'maybe_add_existing_user_to_blog' );
@@ -71,7 +76,9 @@ remove_filter( 'option_siteurl', '_config_wp_siteurl' );
 remove_filter( 'option_home',    '_config_wp_home'    );
 
 // Some options changes should trigger blog details refresh.
-add_action( 'updated_option', '_wp_refresh_blog_details_on_updated_option' );
+add_action( 'update_option_blogname',   'refresh_blog_details', 10, 0 );
+add_action( 'update_option_siteurl',    'refresh_blog_details', 10, 0 );
+add_action( 'update_option_post_count', 'refresh_blog_details', 10, 0 );
 
 // If the network upgrade hasn't run yet, assume ms-files.php rewriting is used.
 add_filter( 'default_site_option_ms_files_rewriting', '__return_true' );

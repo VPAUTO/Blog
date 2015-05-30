@@ -1,4 +1,4 @@
-/* global plugininstallL10n, tb_click, confirm */
+/* global plugininstallL10n, tb_click */
 
 /* Plugin Browser Thickbox related JS*/
 var tb_position;
@@ -17,7 +17,7 @@ jQuery( document ).ready( function( $ ) {
 			});
 			if ( typeof document.body.style.maxWidth !== 'undefined' ) {
 				tbWindow.css({
-					'top': ( ( 792 < width ) ? 30 : 10 ) + 'px',
+					'top': '30px',
 					'margin-top': '0'
 				});
 			}
@@ -38,11 +38,14 @@ jQuery( document ).ready( function( $ ) {
 		tb_position();
 	});
 
-	$('.plugin-card').on( 'click', 'a.thickbox', function() {
+	$( '.plugin-card, .plugins .column-description' ).on( 'click', 'a.thickbox', function() {
 		tb_click.call(this);
 
-		$('#TB_title').css({'background-color':'#222','color':'#cfcfcf'});
-		$('#TB_ajaxWindowTitle').html('<strong>' + plugininstallL10n.plugin_information + '</strong>&nbsp;' + $(this).data( 'title' ) );
+		$('#TB_title').css({'background-color':'#23282d','color':'#cfcfcf'});
+		$('#TB_ajaxWindowTitle').html( '<strong>' + plugininstallL10n.plugin_information + '</strong>&nbsp;' + $(this).data( 'title' ) );
+		$('#TB_iframeContent').attr( 'title', plugininstallL10n.plugin_information + ' ' + $(this).data( 'title' ) );
+		$('#TB_closeWindowButton').focus();
+
 		return false;
 	});
 
@@ -65,9 +68,5 @@ jQuery( document ).ready( function( $ ) {
 		// Flip the content.
 		$( '#section-holder div.section' ).hide(); // Hide 'em all.
 		$( '#section-' + tab ).show();
-	});
-
-	$( 'a.install-now' ).click( function() {
-		return confirm( plugininstallL10n.ays );
 	});
 });

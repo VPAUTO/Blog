@@ -302,11 +302,11 @@ var imageEdit = window.imageEdit = {
 	open : function( postid, nonce, view ) {
 		this._view = view;
 
-		var data, elem = $('#image-editor-' + postid), head = $('#media-head-' + postid),
+		var dfd, data, elem = $('#image-editor-' + postid), head = $('#media-head-' + postid),
 			btn = $('#imgedit-open-btn-' + postid), spin = btn.siblings('.spinner');
 
 		btn.prop('disabled', true);
-		spin.show();
+		spin.addClass( 'is-active' );
 
 		data = {
 			'action': 'image-editor',
@@ -315,13 +315,20 @@ var imageEdit = window.imageEdit = {
 			'do': 'open'
 		};
 
-		elem.load(ajaxurl, data, function() {
+		dfd = $.ajax({
+			url:  ajaxurl,
+			type: 'post',
+			data: data
+		}).done(function( html ) {
+			elem.html( html );
 			head.fadeOut('fast', function(){
 				elem.fadeIn('fast');
 				btn.removeAttr('disabled');
-				spin.hide();
+				spin.removeClass( 'is-active' );
 			});
 		});
+
+		return dfd;
 	},
 
 	imgLoaded : function(postid) {
